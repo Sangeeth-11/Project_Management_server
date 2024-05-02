@@ -18,3 +18,17 @@ exports.userRegister=async(req,res)=>{
         res.status(404).json(error)
     }
 }
+
+exports.userLogin = async(req,res)=>{
+    const {email,password} =req.body
+    try {
+        const existingUser=await users.findOne({email,password})
+        if (existingUser) {
+            res.status(200).json('login successful')
+        } else {
+            res.status(406).json('incorrect email or password')
+        }
+    } catch (error) {
+        res.status(404).json(error)
+    }
+}
