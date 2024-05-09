@@ -5,7 +5,8 @@ const jwtMiddleware =(req,res,next)=>{
         const token =req.headers.authorization.split(" ")[1]
         if (token) {
             const result = jwt.verify(token,process.env.secretkey)
-            console.log(result);
+            // console.log(result);
+            req.payload = result.userId
             next()  
         } else {
            res.status(406).json("please login") 
