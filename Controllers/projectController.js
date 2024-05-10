@@ -22,5 +22,47 @@ exports.addProject=async(req,res)=>{
         res.status(406).json(err)
     }
 
-    
+}
+
+exports.homeProjects = async(req, res) =>{
+    try{
+        const result = await projects.find().limit(3)
+        if (result) {
+            res.status(200).json(result)
+        } else {
+            result.status(401).json("no projects")
+        }
+    }
+    catch(err){
+        res.status(406).json(err)
+    }
+}
+
+exports.allProjects = async(req, res) =>{
+    try{
+        const result = await projects.find()
+        if (result) {
+            res.status(200).json(result)
+        } else {
+            result.status(401).json("no projects")
+        }
+    }
+    catch(err){
+        res.status(406).json(err)
+    }
+}
+
+exports.userProjects = async(req, res) =>{
+    const userId = req.payload
+    try{
+        const result = await projects.find({userId})
+        if (result) {
+            res.status(200).json(result)
+        } else {
+            result.status(401).json("no projects")
+        }
+    }
+    catch(err){
+        res.status(406).json(err)
+    }
 }
