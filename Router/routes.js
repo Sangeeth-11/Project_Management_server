@@ -13,5 +13,6 @@ router.post('/add-project',jwtmiddle,multermiddle.single('image'),projectControl
 router.get('/home-project',projectController.homeProjects)
 router.get('/all-project',jwtmiddle,projectController.allProjects)
 router.get('/user-project',jwtmiddle,projectController.userProjects)
+router.put('/edit-project/:pid',jwtmiddle,multermiddle.single('image'),projectController.editProjects)
 
 module.exports=router
