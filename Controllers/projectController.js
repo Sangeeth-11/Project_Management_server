@@ -83,3 +83,16 @@ exports.editProjects = async (req, res) => {
         res.status(406).json(err)
     }
 }
+
+
+exports.deleteProjects = async (req, res) => {
+    const {pid} = req.params
+    try {
+        const result = await projects.findByIdAndDelete({ _id:pid })
+        res.status(200).json(result)
+    }
+    catch (err) {
+        console.log(err);
+        res.status(406).json(err)
+    }
+}
