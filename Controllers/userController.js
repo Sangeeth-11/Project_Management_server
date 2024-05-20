@@ -28,11 +28,25 @@ exports.userLogin = async(req,res)=>{
         if (existingUser) {
             
             const token = jwt.sign({userId:existingUser._id},process.env.secretkey)
-            res.status(200).json({token,username:existingUser.username})
+            res.status(200).json({token,username:existingUser.username,userDetails:existingUser})
         } else {
             res.status(406).json('incorrect email or password')
         }
     } catch (error) {
         res.status(404).json(error)
+    }
+}
+
+exports.editProfile = async(req,res)=>{
+    const userId =req.payload
+    const { username, email, password, github, linkdin } = req.body
+    const profile = req.file ? req.file.filename : req.body.profile
+    try {
+        const result = await users.findByIdAndUpdate({_id:userId},{username,email,password,github,linkdin,profile},{new:true})
+        result.save()
+        res.status(200).json(result)
+    } catch (error) {
+        res.status(406).json(error)
+        
     }
 }
